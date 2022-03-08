@@ -1,44 +1,41 @@
-# Recogonize Flowers with TensorFLow Lite Model Maker and Android Studio ML Model Binding
+# EXAMEN FINAL PRÁCTICO
 
-This folder contains the code for the TensorFlow Lite codelab:
+http://www.geognos.com/api/en/countries/service_name/counry_code_or_ip.ouput_format 
 
-* [Recognize Flowers with TensorFlow on Android (Beta)](https://goo.gle/3dbCSbt)
-
-## Introduction
-
-This beta codelab introduces the latest tooling using TensorFlow Lite Model Maker and Android Studio 4.1 Beta 1 or above. In addition, it will require access to a physical Android device to test. If you prefer to use the stable version of this codelab, follow this codelab instead.
-
-In these codelabs, you will learn:
-
-*   How to train your own custom image classifier using [TensorFlow Lite Model Maker](https://www.tensorflow.org/lite/tutorials/model_maker_image_classification).
-*   How to use Android Studio to import the TensorFlow Lite model to integrate the custom model in an Android app using CameraX.
-*   How to use GPU on your phone to accelerate your model.
-
-
-## Pre-requisites
-
-[Android Studio 4.1 Beta 1 or above](http://developers.android.com/studio/preview)
-
-## Getting Started
-
-Visit the Google codelabs site to follow along the guided steps.
-
-## Support
-
-- Stack Overflow: https://stackoverflow.com/questions/tagged/tensorflow-lite+android-studio
-
-## License
-
- Copyright (C) 2020 The Android Open Source Project
+service_name: Info o flag
+counry_code_or_ip: ISO2 format name
+ouput_format : json o png
  
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
- 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
+1.- Implemente un Modelo Tensor Flow Lite que reconozca las banderas de países, usando el dataset adjunto a la tarea. El modelo deberá determinar el nombre del país en formato del "ISO 3166-1-alpha-2 character code" , el cual representa el parámetro necesario para la siguiente parte.
+
+2.- Unavez identificado el país, mostrar la información, usando los Servicios Web: http://www.geognos.com/api/en/countries/info/{alpha2code}.json y http://www.geognos.com/api/en/countries/flag/{alpha2code}.png
+
+Con los datos GeoReferenciales de la  ubicación del país y la capital, ubicar en el Map el país y marcar con un rectángulo en la parte inferior mostrar los datos mas importantes, como se muestra en la imagen de abajo
+
+Resultados:
+
+Identificando Belgica:
+
+<img src="https://user-images.githubusercontent.com/68710846/157285711-6fa5c6a9-2b6d-401d-a79b-cdec40244bc5.png" height="600" />
+
+Detalles de Belgica:
+
+<img src="https://user-images.githubusercontent.com/68710846/157285583-65c68d76-4cc8-4d5e-b37a-f8913214f32e.png" height="600" />
+
+Identificando México:
+
+<img src="https://user-images.githubusercontent.com/68710846/157285939-b1f2b460-5870-4ba7-bb39-924f7cde6c08.png" height="600" />
+
+Detalles de México:
+
+<img src="https://user-images.githubusercontent.com/68710846/157285868-6f202914-e85d-4fd9-b768-68cdd49afcd8.png" height="600" />
+
+Identificando Francia:
+
+<img src="https://user-images.githubusercontent.com/68710846/157286182-7776cfa0-ba6a-4450-8270-7cbf5c45a6c8.png" height="600" />
+
+Detalles de Francia:
+
+<img src="https://user-images.githubusercontent.com/68710846/157286253-8fdddcf4-9c13-418c-bda0-111d1d32735a.png" height="600" />
+
