@@ -2,6 +2,7 @@ package org.tensorflow.lite.examples.classification;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,10 +13,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.squareup.picasso.Picasso;
 
 import org.tensorflow.lite.examples.classification.Models.Country;
 import org.tensorflow.lite.examples.classification.Models.CountryInfo;
+import org.tensorflow.lite.examples.classification.Models.GeoRectangle;
 import org.tensorflow.lite.examples.classification.Services.FlagsService;
 import org.tensorflow.lite.examples.classification.databinding.ActivityMapsBinding;
 
@@ -115,6 +119,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onResponse(Call<CountryInfo> call, Response<CountryInfo> response) {
                 Country results = response.body().getResults();
+                GeoRectangle geoRectangle = results.getGeoRectangle();
+
                 textViewNameCountry.setText(results.getName());
                 textViewCapital.setText("Capital: " + results.getCapital().getName());
                 textViewCodeISO2.setText("Code ISO 2: " + results.getCountryCodes().getIso2());
@@ -124,7 +130,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 textViewTelPrefix.setText("Tel Prefix:" + results.getTelPref());
                 // Add a marker in Sydney and move the camera
                 LatLng sydney = new LatLng(results.getGeoPt().get(0), results.getGeoPt().get(1));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 3.75f));
+
+                PolylineOptions polylineOptions = new PolylineOptions()
+                        .add(new LatLng(geoRectangle.getNorth(), geoRectangle.getWest()))
+                        .add(new LatLng(geoRectangle.getSouth(), geoRectangle.getWest()))  // North of the previous point, but at the same longitude
+                        .add(new LatLng(geoRectangle.getSouth(), geoRectangle.getEast()))  // Same latitude, and 30km to the west
+                        .add(new LatLng(geoRectangle.getNorth(), geoRectangle.getEast()))  // Same longitude, and 16km to the south
+                        .add(new LatLng(geoRectangle.getNorth(), geoRectangle.getWest()))
+                        .color(Color.RED); // Closes the polyline.
+
+                // Get back the mutable Polyline
+                Polyline polyline = mMap.addPolyline(polylineOptions);
             }
 
             @Override
@@ -132,6 +149,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
-
     }
 }

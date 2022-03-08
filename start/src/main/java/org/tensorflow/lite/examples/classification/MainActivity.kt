@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener(object: View.OnClickListener{
             override fun onClick(p0: View?) {
                 var intent: Intent = Intent(p0?.context, MapsActivity::class.java).apply {
-                    putExtra("countryCode", "EC");
+                    putExtra("countryCode", countryCode);
                 }
                 /*var intent = Intent(p0?.context, org.tensorflow.lite.examples.classification.FlagsService::class.java)*/
                 startActivity(intent)
