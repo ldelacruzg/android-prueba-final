@@ -19,12 +19,15 @@ package org.tensorflow.lite.examples.classification
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.os.Bundle
 import android.util.Log
 import android.util.Size
+import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -39,20 +42,21 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import org.tensorflow.lite.examples.classification.ml.Modelo10
+import org.tensorflow.lite.examples.classification.Services.FlagsService
+import org.tensorflow.lite.examples.classification.ml.ModelFlags
 import org.tensorflow.lite.examples.classification.ui.RecognitionAdapter
 import org.tensorflow.lite.examples.classification.util.YuvToRgbConverter
 import org.tensorflow.lite.examples.classification.viewmodel.Recognition
 import org.tensorflow.lite.examples.classification.viewmodel.RecognitionListViewModel
 import org.tensorflow.lite.support.image.TensorImage
 import java.util.concurrent.Executors
-import kotlin.random.Random
 
 // Constants
 private const val MAX_RESULT_DISPLAY = 3 // Maximum number of results displayed
 private const val TAG = "TFL Classify" // Name for logging
 private const val REQUEST_CODE_PERMISSIONS = 999 // Return code after asking for permission
 private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA) // permission needed
+private var countryCode = ""
 
 // Listener for the result of the ImageAnalyzer
 typealias RecognitionListener = (recognition: List<Recognition>) -> Unit
@@ -109,6 +113,16 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
+        val button: Button = findViewById(R.id.buttonMap)
+        button.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(p0: View?) {
+                var intent: Intent = Intent(p0?.context, MapsActivity::class.java).apply {
+                    putExtra("countryCode", "EC");
+                }
+                /*var intent = Intent(p0?.context, org.tensorflow.lite.examples.classification.FlagsService::class.java)*/
+                startActivity(intent)
+            }
+        })
     }
 
     /**
@@ -208,14 +222,13 @@ class MainActivity : AppCompatActivity() {
     private class ImageAnalyzer(ctx: Context, private val listener: RecognitionListener) :
         ImageAnalysis.Analyzer {
 
-        private val flowerModel = Modelo10.newInstance(ctx)
+        private val flagsModel = ModelFlags.newInstance(ctx)
 
         // TODO 1: Add class variable TensorFlow Lite Model
-        // Initializing the flowerModel by lazy so that it runs in the same thread when the process
+        // Initializing the flagsModel by lazy so that it runs in the same thread when the process
         // method is called.
 
         // TODO 6. Optional GPU acceleration
-
 
         override fun analyze(imageProxy: ImageProxy) {
 
@@ -223,21 +236,19 @@ class MainActivity : AppCompatActivity() {
 
             val tfImage = TensorImage.fromBitmap(toBitmap(imageProxy))
 
-            val outputs = flowerModel.process(tfImage)
+            val outputs = flagsModel.process(tfImage)
                 .probabilityAsCategoryList.apply {
                     sortByDescending { it.score } // Sort with highest confidence first
                 }.take(MAX_RESULT_DISPLAY) // take the top results
 
-
             // START - Placeholder code at the start of the codelab. Comment this block of code out.
-           // for (i in 0 until MAX_RESULT_DISPLAY){
-            //  items.add(Recognition("Fake label $i", Random.nextFloat()))
-            //}
-            // END - Placeholder code at the start of the codelab. Comment this block of code out.
-
             for (output in outputs) {
                 items.add(Recognition(output.label, output.score))
             }
+            // END - Placeholder code at the start of the codelab. Comment this block of code out.
+
+            countryCode = outputs[0].label
+
             // Return the result
             listener(items.toList())
 

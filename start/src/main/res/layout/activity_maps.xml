@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CountryResult">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="168dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".MainActivity"
+        tools:ignore="MissingConstraints"></fragment>
+
+    <ImageView
+        android:id="@+id/imageViewFlag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textViewNameCountry"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textViewNameCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewFlag"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewFlag"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewFlag" />
+
+    <TextView
+        android:id="@+id/textViewCapital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Capital:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map" />
+
+    <TextView
+        android:id="@+id/textView2CodeISO2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Code ISO 2:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewCapital"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCapital" />
+
+    <TextView
+        android:id="@+id/textViewCodeISONum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Code ISO Num:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView2CodeISO2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2CodeISO2" />
+
+    <TextView
+        android:id="@+id/textViewCodeISO3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Code ISO 3:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewCodeISONum"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCodeISONum" />
+
+    <TextView
+        android:id="@+id/textViewCodeFIPS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Code FIPS:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewCodeISO3"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCodeISO3" />
+
+    <TextView
+        android:id="@+id/textViewTelPrefix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Tel Prefix:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textViewCodeFIPS"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCodeFIPS" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
